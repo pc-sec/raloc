@@ -1,0 +1,13 @@
+[package]
+name = "tloc"
+version = "0.1.0"
+authors = ["mctoady.eth <mctoadyeth@gmail.com>"]
+edition = "2021"
+description = "toad's smol solidity scoper"
+license = "MIT"
+repository = "https://github.com/mccoady/tloc"
+keywords = ["cli", "solidity", "loc"]
+readme = "README.md"
+
+[dependencies]
+clap = { version = "4.4", features = ["derive"] }
