@@ -21,14 +21,16 @@ fn main() {
     let mut total_code_count = 0;
 
     let mut file = OpenOptions::new()
-        .write(true)     // Enable append mode
-        .create(true)     // Create the file if it doesn't exist
-        .truncate(true)
-        .open(&args.out).unwrap();     // Open the file, returning a Result
+        .write(true)        // Enable append mode
+        .create(true)       // Create the file if it doesn't exist
+        .truncate(true)     // Wipe file if already exists
+        .open(&args.out).unwrap();     // Open the file, returning a Result, unwrap it
     
     writeln!(file, "# Scope").unwrap();
 
-    // If user has provided a specific file location
+    // Handle user's path is a specific file location
+    // Handle user's path is a directory
+    // Handle user error where user passed neither
     if args.path.is_file() {
         if let Some(extension) = args.path.extension() {
             if extension == "sol" {
@@ -46,10 +48,13 @@ fn main() {
 
 pub fn traverse_dir(path: &PathBuf, file :&mut File, traverse: &bool) -> u32 {
     let mut code_count = 0;
+    // Loop over directory
     for entry in read_dir(path).expect("failed to read path") {
         let entry = entry.expect("failed to handle file");
         let path = entry.path();
 
+        // If file calc SLOC & write to file
+        // If directory traverse directory (IF traverse == true)
         if path.is_file() {
             if let Some(extension) = entry.path().extension() {
                 if extension == "sol" {  // For Solidity files
@@ -58,9 +63,9 @@ pub fn traverse_dir(path: &PathBuf, file :&mut File, traverse: &bool) -> u32 {
                 }
             }
         } else if path.is_dir() {
-            let dir_name = &path.file_name().unwrap().to_string_lossy();
-            writeln!(file, "## {}", dir_name).unwrap();
             if *traverse {
+                let dir_name = &path.file_name().unwrap().to_string_lossy();
+                writeln!(file, "## {}", dir_name).unwrap();
                 code_count += traverse_dir(&path, file, &true);
             }
         }
@@ -74,7 +79,7 @@ pub fn write_output(file: &mut File, entry: &PathBuf) -> u32 {
 
     let mut multi_line_comment = false;
     for line in content.lines() {
-        // Handle being in a multiline comment
+        // Handle being inside a multiline comment
         if multi_line_comment {
             if line.contains("*/") {
                 multi_line_comment = false;
@@ -90,6 +95,8 @@ pub fn write_output(file: &mut File, entry: &PathBuf) -> u32 {
             _ => code_count += 1,
         }
     }
+
+    // Write - `FileName.sol` (COUNT) to file
     let file_name = &entry.file_name().unwrap().to_string_lossy();
     let output = format!("- `{}` ({})", &file_name, code_count);
     writeln!(file, "{}", output).unwrap();
