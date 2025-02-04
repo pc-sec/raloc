@@ -64,8 +64,6 @@ pub fn traverse_dir(path: &PathBuf, file :&mut File, traverse: &bool) -> u32 {
             }
         } else if path.is_dir() {
             if *traverse {
-                let dir_name = &path.file_name().unwrap().to_string_lossy();
-                writeln!(file, "## {}", dir_name).unwrap();
                 code_count += traverse_dir(&path, file, &true);
             }
         }
