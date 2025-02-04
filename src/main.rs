@@ -37,6 +37,8 @@ fn main() {
         }       
     } else if args.path.is_dir() {
         total_code_count = traverse_dir(&args.path, &mut file, &args.recurse);
+    } else {
+        panic!("PATH READ ERROR");
     }
 
     writeln!(file, "TOTAL: {}", total_code_count).unwrap();
@@ -56,6 +58,8 @@ pub fn traverse_dir(path: &PathBuf, file :&mut File, traverse: &bool) -> u32 {
                 }
             }
         } else if path.is_dir() {
+            let dir_name = &path.file_name().unwrap().to_string_lossy();
+            writeln!(file, "## {}", dir_name).unwrap();
             if *traverse {
                 code_count += traverse_dir(&path, file, &true);
             }
