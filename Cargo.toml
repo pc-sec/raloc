@@ -9,5 +9,13 @@ repository = "https://github.com/mccoady/tloc"
 keywords = ["cli", "solidity", "loc"]
 readme = "README.md"
 
+[lib]
+name = "tloc"
+path = "src/lib.rs"
+
+[[bin]]
+name = "tloc"
+path = "src/main.rs"
+
 [dependencies]
 clap = { version = "4.4", features = ["derive"] }
