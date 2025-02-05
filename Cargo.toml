@@ -1,20 +1,19 @@
 [package]
-name = "tloc"
+name = "raloc"
 version = "0.1.0"
 authors = ["mctoady.eth <mctoadyeth@gmail.com>"]
 edition = "2021"
-description = "toad's smol solidity scoper"
+description = "rust code counter that ignores tests"
 license = "MIT"
-repository = "https://github.com/mccoady/tloc"
-keywords = ["cli", "solidity", "loc"]
+keywords = ["cli", "rust", "loc"]
 readme = "README.md"
 
 [lib]
-name = "tloc"
+name = "raloc"
 path = "src/lib.rs"
 
 [[bin]]
-name = "tloc"
+name = "raloc"
 path = "src/main.rs"
 
 [dependencies]

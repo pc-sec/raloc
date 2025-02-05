@@ -3,11 +3,11 @@ use std::path::PathBuf;
 use std::fs::OpenOptions;
 use std::io::Write;
 
-use tloc::traverse_dir;
+use raloc::traverse_dir;
 
 #[derive(Parser)]
-#[command(name = "tloc")]
-#[command(about = "a simple solidity codebase parser")]
+#[command(name = "raloc")]
+#[command(about = "Rust actual lines of code (minus tests)")]
 struct Args {
     #[arg(long, short)]
     path: PathBuf,

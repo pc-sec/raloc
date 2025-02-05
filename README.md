@@ -1,15 +1,10 @@
-# tloc (Toad Lines of Code) 🐸
-tloc is a lightweight CLI tool built to quickly get a markdown list of all the solidity files within a directory, their SLOC and the total SLOC of the codebase.
-
-## Motivation
-The output of this tool is something I have been doing manually at the start of every audit engagement. I've always preferred having the list of files and their associated lines of code in a markdown file as it allows me to easily check off files after review them and add notes along the way.
-
-This tool greatly speeds that up, and it's written in Rust so... blazingly fast™️.
+# raloc (Rust Actual Lines of Code)
+tloc is a lightweight CLI tool built in with Rust to quickly get a markdown list of all the rust files within a directory, their SLOC and the total SLOC of the codebase whilst not counting lines from inline unit tests.
 
 ## Installation
 ```bash
-git clone https://github.com/mccoady/tloc
-cd tloc
+git clone https://github.com/pc-sec/raloc
+cd raloc
 cargo install --path .
 ```
 
@@ -27,10 +22,8 @@ tloc --path PATH --out OUT --recurse
 **Example Output**
 ```markdown
 # Scope
-- `FileOne.sol` (203)
-- `FileTwo.sol` (603)
+- `file_one.rs` (203)
+- `file_two.rs` (603)
 TOTAL: 806
 ```
 
-## Contributing
-Contributions are welcome!
