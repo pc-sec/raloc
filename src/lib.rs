@@ -42,10 +42,18 @@ fn write_output(file: &mut File, entry: &PathBuf) -> u32 {
     let content = read_to_string(entry).unwrap();
     let mut code_count = 0;
 
+    let mut multi_line_comment = false;
     for line in content.lines() { 
+        if multi_line_comment {
+            if line.contains("*/") {
+                multi_line_comment = false;
+            }
+            continue;
+        }
         match line.trim() {
             val if val.len() == 0 => continue,
             val if val.starts_with("//") => continue,
+            val if val.starts_with("/*") => multi_line_comment = true,
             val if val.contains("#[cfg(test)]") => break,
             _ => code_count += 1,
         }
